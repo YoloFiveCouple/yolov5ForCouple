@@ -1,3 +1,4 @@
+# coding: utf-8
 # YOLOv5 🚀 by Ultralytics, GPL-3.0 license
 """
 Run inference on images, videos, directories, streams, etc.
@@ -217,6 +218,10 @@ def run(weights='yolov5s.pt',  # model.pt path(s)
 
             # Print time (inference-only)
             print(f'{s}Done. ({t3 - t2:.3f}s)')
+
+            # ここで、APIリクエストして、イメージを保存する
+            print("ここで、APIリクエストして、イメージを保存する")
+            print(base64.b64encode(im0).decode('utf-8'))
 
             # Stream results
             im0 = annotator.result()
