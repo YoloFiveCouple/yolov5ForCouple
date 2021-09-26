@@ -102,6 +102,7 @@ results.print()  # or .show(), .save(), .crop(), .pandas(), etc.
 
 <details>
 <summary>Inference with detect.py</summary>
+![image](https://user-images.githubusercontent.com/26809782/134759113-537cb139-ff8c-4323-bf5c-9c28f23bc7b2.png)
 
 `detect.py` runs inference on a variety of sources, downloading models automatically from
 the [latest YOLOv5 release](https://github.com/ultralytics/yolov5/releases) and saving results to `runs/detect`.
