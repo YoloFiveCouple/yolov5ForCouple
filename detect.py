@@ -192,6 +192,7 @@ def run(weights='yolov5s.pt',  # model.pt path(s)
             gn = torch.tensor(im0.shape)[[1, 0, 1, 0]]  # normalization gain whwh
             imc = im0.copy() if save_crop else im0  # for save_crop
             annotator = Annotator(im0, line_width=line_thickness, pil=not ascii)
+            labels = []
             if len(det):
                 # Rescale boxes from img_size to im0 size
                 det[:, :4] = scale_coords(img.shape[2:], det[:, :4], im0.shape).round()
@@ -212,6 +213,7 @@ def run(weights='yolov5s.pt',  # model.pt path(s)
                     if save_img or save_crop or view_img:  # Add bbox to image
                         c = int(cls)  # integer class
                         label = None if hide_labels else (names[c] if hide_conf else f'{names[c]} {conf:.2f}')
+                        labels.append(label)
                         annotator.box_label(xyxy, label, color=colors(c, True))
                         if save_crop:
                             save_one_box(xyxy, imc, file=save_dir / 'crops' / names[c] / f'{p.stem}.jpg', BGR=True)
@@ -221,7 +223,13 @@ def run(weights='yolov5s.pt',  # model.pt path(s)
 
             # ここで、APIリクエストして、イメージを保存する
             print("ここで、APIリクエストして、イメージを保存する")
-            print(base64.b64encode(im0).decode('utf-8'))
+            # print(base64.b64encode(im0).decode('utf-8')) # ★ 正常動作確認ずみ
+            print(labels)
+
+            # ここで、ローカルDBに以下の情報を記録する
+            # regist_date : 処理した日時
+            # msg : 検知したときの出力MSG image 1/1 /content/04-20210926140930-00.jpg: 480x640 2 sakis, Done. (2.563s)　という文字列も記録する
+            # img : base64化したYOLO分析後の
 
             # Stream results
             im0 = annotator.result()
