@@ -29,6 +29,8 @@ from utils.general import apply_classifier, check_img_size, check_imshow, check_
 from utils.plots import Annotator, colors
 from utils.torch_utils import load_classifier, select_device, time_sync
 import base64
+import json
+import datetime
 
 @torch.no_grad()
 def run(weights='yolov5s.pt',  # model.pt path(s)
@@ -223,13 +225,20 @@ def run(weights='yolov5s.pt',  # model.pt path(s)
 
             # ここで、APIリクエストして、イメージを保存する
             print("ここで、APIリクエストして、イメージを保存する")
-            # print(base64.b64encode(im0).decode('utf-8')) # ★ 正常動作確認ずみ
-            print(labels)
 
             # ここで、ローカルDBに以下の情報を記録する
             # regist_date : 処理した日時
             # msg : 検知したときの出力MSG image 1/1 /content/04-20210926140930-00.jpg: 480x640 2 sakis, Done. (2.563s)　という文字列も記録する
-            # img : base64化したYOLO分析後の
+            # labels : YOLO分析後の、検知した"クラス"のラベル
+            # img : base64化したYOLO分析後(ラベルとバウンディングボックスつきの画像 // base64.b64encode(im0).decode('utf-8')) # ★ 正常動作確認ずみ
+            info = {
+                "regist_date" : datetime.datetime.now(),
+                "msg" : s,
+                "labels" : labels,
+                "img" : "img2base64"
+            }
+            print(json.dumps(info))
+
 
             # Stream results
             im0 = annotator.result()
