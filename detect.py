@@ -232,7 +232,7 @@ def run(weights='yolov5s.pt',  # model.pt path(s)
             # labels : YOLO分析後の、検知した"クラス"のラベル
             # img : base64化したYOLO分析後(ラベルとバウンディングボックスつきの画像 // base64.b64encode(im0).decode('utf-8')) # ★ 正常動作確認ずみ
             info = {
-                "regist_date" : datetime.datetime.now(),
+                "regist_date" : datetime.datetime.now().strftime("%Y%m%d %H%M%S"),
                 "msg" : s,
                 "labels" : labels,
                 "img" : "img2base64"
