@@ -17,6 +17,8 @@ import cv2
 import numpy as np
 import torch
 import torch.backends.cudnn as cudnn
+from pymongo import MongoClient
+import pymongo
 
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[0]  # YOLOv5 root directory
@@ -241,6 +243,12 @@ def run(weights='yolov5s.pt',  # model.pt path(s)
                 "img" : base64.b64encode(im0).decode('utf-8')
             }
             print(json.dumps(info))
+            with MongoClient("localhost", 27017) as client:
+                # ★ ここは、社内では変えること
+                db = client.yolov5couple
+                yolo5collection = db.yolov5couple
+
+                yolo5collection.insert(info)
 
 
             # Stream results
