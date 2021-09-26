@@ -5,6 +5,8 @@ Run inference on images, videos, directories, streams, etc.
 
 Usage:
     $ python path/to/detect.py --source path/to/img.jpg --weights yolov5s.pt --img 640
+
+    path : /root/app/yolov5ForCouple/detect.py
 """
 
 import argparse
@@ -223,19 +225,20 @@ def run(weights='yolov5s.pt',  # model.pt path(s)
             # Print time (inference-only)
             print(f'{s}Done. ({t3 - t2:.3f}s)')
 
-            # ここで、APIリクエストして、イメージを保存する
-            print("ここで、APIリクエストして、イメージを保存する")
+            # ここで、YOLO分析後データをDBに保存する
+            print("ここで、YOLO分析後データをDBに保存する")
 
-            # ここで、ローカルDBに以下の情報を記録する
-            # regist_date : 処理した日時
-            # msg : 検知したときの出力MSG image 1/1 /content/04-20210926140930-00.jpg: 480x640 2 sakis, Done. (2.563s)　という文字列も記録する
-            # labels : YOLO分析後の、検知した"クラス"のラベル
-            # img : base64化したYOLO分析後(ラベルとバウンディングボックスつきの画像 // base64.b64encode(im0).decode('utf-8')) # ★ 正常動作確認ずみ
+            # ローカルDBに以下の情報を記録する
+            # regist_date   : 処理した日時
+            # msg           : 検知したときの出力MSG image 1/1 /content/04-20210926140930-00.jpg: 480x640 2 sakis, Done. (2.563s)　という文字列も記録する
+            # labels        : YOLO分析後の、検知した"クラス"のラベル
+            # img           : base64化したYOLO分析後(ラベルとバウンディングボックスつきの画像 // base64.b64encode(im0).decode('utf-8')) # ★ 正常動作確認ずみ
             info = {
-                "regist_date" : datetime.datetime.now().strftime("%Y%m%d %H%M%S"),
+                "regist_date" : datetime.datetime.now().strftime("%Y%m%d"),
+                "regist_time" : datetime.datetime.now().strftime("%H%M%S"),
                 "msg" : s,
                 "labels" : labels,
-                "img" : "img2base64"
+                "img" : base64.b64encode(im0).decode('utf-8')
             }
             print(json.dumps(info))
 
