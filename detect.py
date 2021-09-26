@@ -246,7 +246,7 @@ def run(weights='yolov5s.pt',  # model.pt path(s)
             with MongoClient("localhost", 27017) as client:
                 # ★ ここは、社内では変えること
                 db = client.yolov5couple
-                yolo5collection = db.yolov5couple
+                yolo5collection = db.yolov5couple2
 
                 yolo5collection.insert_one(info)
 
