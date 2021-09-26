@@ -242,7 +242,7 @@ def run(weights='yolov5s.pt',  # model.pt path(s)
                 "labels" : labels,
                 "img" : base64.b64encode(im0).decode('utf-8')
             }
-            print(json.dumps(info))
+            #print(json.dumps(info))
             with MongoClient("localhost", 27017) as client:
                 # ★ ここは、社内では変えること
                 db = client.yolov5couple
