@@ -248,7 +248,7 @@ def run(weights='yolov5s.pt',  # model.pt path(s)
                 db = client.yolov5couple
                 yolo5collection = db.yolov5couple
 
-                yolo5collection.insert(info)
+                yolo5collection.insert_one(info)
 
 
             # Stream results
