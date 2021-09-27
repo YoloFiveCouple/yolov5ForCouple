@@ -244,7 +244,7 @@ def run(weights='yolov5s.pt',  # model.pt path(s)
                 "regist_time" : datetime.datetime.now().strftime("%H%M%S"),
                 "msg" : s,
                 "labels" : labels,
-                "img" : os.getcwd() + save_path
+                "img" : os.getcwd() + '/' + save_path
             }
             #print(json.dumps(info))
             with MongoClient("mongodb://localhost:27017") as client:
