@@ -19,6 +19,7 @@ import torch
 import torch.backends.cudnn as cudnn
 from pymongo import MongoClient
 import pymongo
+import os
 
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[0]  # YOLOv5 root directory
@@ -229,6 +230,8 @@ def run(weights='yolov5s.pt',  # model.pt path(s)
 
             # ここで、YOLO分析後データをDBに保存する
             print("ここで、YOLO分析後データをDBに保存する")
+
+            print("[notice] save path to . : " + os.getcwd() + save_path)
 
             # ローカルDBに以下の情報を記録する
             # regist_date   : 処理した日時
