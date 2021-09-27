@@ -20,6 +20,7 @@ import torch.backends.cudnn as cudnn
 from pymongo import MongoClient
 import pymongo
 import os
+import pymsteams
 
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[0]  # YOLOv5 root directory
@@ -253,6 +254,11 @@ def run(weights='yolov5s.pt',  # model.pt path(s)
 
                 yolo5collection.insert_one(info)
 
+            # ★ Teams通知
+            myTeamsMessage = pymsteams.connectorcard(os.environ['INCOMING_WEB_HOOK'])
+            myTeamsMessage.title("yolov5 analysis result...")
+            myTeamsMessage.text(s)
+            myTeamsMessage.send()
 
             # Stream results
             im0 = annotator.result()
